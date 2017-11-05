@@ -252,6 +252,11 @@ void startGame(void) {
     if (ball_pos_y + ball_radius > orthoSizeY || ball_pos_y - ball_radius < -orthoSizeY)
         ball_velocity_y = -ball_velocity_y;
 
+    // ball hits the left paddle
+    if (ball_pos_x - ball_radius < -paddle_x && ball_pos_x - ball_radius < -paddle_x - 2)
+        if (ball_pos_y < player1_paddile_y + paddle_height && ball_pos_y > player1_paddile_y - paddle_height)
+            ball_velocity_x = -ball_velocity_x;
+
     // ball hits the right paddle
     if (ball_pos_x + ball_radius > paddle_x && ball_pos_x + ball_radius < paddle_x + 2)
         if (ball_pos_y < player2_paddile_y + paddle_height && ball_pos_y > player2_paddile_y - paddle_height)
