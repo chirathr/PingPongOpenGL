@@ -21,9 +21,7 @@ void init(void) {
     glShadeModel (GL_FLAT);
 }
 
-void display(void) {
-    glClear(GL_COLOR_BUFFER_BIT);
-
+void drawCenterLines() {
     // center lines start
     glBegin(GL_QUADS);
     glColor3f(1.0, 1.0, 1.0);
@@ -193,7 +191,12 @@ void display(void) {
     glVertex2f(-2 , 410);
     glEnd();
     // center lines end
+}
 
+void display(void) {
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    drawCenterLines();
 
     glutSwapBuffers();
     glFlush();
