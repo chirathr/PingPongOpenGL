@@ -12,8 +12,9 @@ static GLint orthoSizeX = 400, orthoSizeY = 400;
 // game variables
 static GLint player1_score = 0, player2_score = 0;
 static GLint player1_life = 3, player2_life = 3;
+static GLint paddle_boundary = 350, paddle_height = 80;
 static GLint player1_paddile_y = 0, player2_paddile_y = 0;
-static GLfloat ball_velocity = 1.0, paddile_velocity = 1.0;
+static GLfloat ball_velocity = 1.0, paddile_velocity = 8.0, ball_radius = 20;
 
 void init(void) {
     // initalise display with black colors
@@ -193,16 +194,51 @@ void drawCenterLines() {
     // center lines end
 }
 
+// x, y is the top left corodinate of the paddle
+void drawPaddle(int x, int y) {
+    glPushMatrix();
+
+    glTranslatef(x, y, 0);
+
+    glBegin(GL_QUADS);
+    glColor3f(1.0, 1.0, 1.0);
+    int height = paddle_height / 2;
+    glVertex2f(-5 , height);
+    glVertex2f(5 , height);
+    glVertex2f(5 , -height);
+    glVertex2f(-5, -height);
+    glEnd();
+
+    glPopMatrix();
+}
+
+void drawBall(int x. int y) {
+    glPushMatrix();
+
+    glTranslatef(x, y, 0);
+
+
+    glColor3f(1.0, 1.0, 1.0);
+    glutSolidSphere (ball_radius, 20, 16);
+
+
+    glPopMatrix();
+}
+
 void display(void) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     drawCenterLines();
+
+    drawPaddle(-550, player1_paddile_y);
+    drawPaddle(550, player2_paddile_y);
 
     glutSwapBuffers();
     glFlush();
 }
 
 void startGame(void) {
+
     glutPostRedisplay();
 }
 
@@ -233,20 +269,24 @@ void mouse(int button, int state, int x, int y) {
 
 void keyboard (unsigned char key, int x, int y) {
     switch (key) {
-        case 'd':
-
+        case 'q':
+            if (player1_paddile_y < paddle_boundary)
+                player1_paddile_y += paddile_velocity;
             glutPostRedisplay();
             break;
-        case 'D':
-
+        case 'a':
+            if (player1_paddile_y > -paddle_boundary)
+                player1_paddile_y -= paddile_velocity;
             glutPostRedisplay();
             break;
-        case 'y':
-
+        case 'o':
+            if (player2_paddile_y < paddle_boundary)
+                player2_paddile_y += paddile_velocity;
             glutPostRedisplay();
             break;
-        case 'Y':
-
+        case 'l':
+            if (player2_paddile_y > -paddle_boundary)
+                player2_paddile_y -= paddile_velocity;
             glutPostRedisplay();
             break;
         default:
