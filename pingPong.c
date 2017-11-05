@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 /* A simple ping pong game */
 
@@ -261,6 +262,20 @@ void startGame(void) {
     if (ball_pos_x + ball_radius > paddle_x && ball_pos_x + ball_radius < paddle_x + 2)
         if (ball_pos_y < player2_paddile_y + paddle_height && ball_pos_y > player2_paddile_y - paddle_height)
             ball_velocity_x = -ball_velocity_x;
+
+    // player 1 scores
+    if (ball_pos_x + ball_radius > orthoSizeX) {
+        player1_score++;
+        printf("Player 1 = %d \n", player1_score);
+        ball_velocity_x = -ball_velocity_x;
+    }
+
+    // player 2 scores
+    if (ball_pos_x - ball_radius < -orthoSizeX) {
+        player2_score++;
+        printf("Player 2 = %d \n", player2_score);
+        ball_velocity_x = -ball_velocity_x;
+    }
 
     glutPostRedisplay();
 }
