@@ -15,6 +15,7 @@ static GLint player1_life = 3, player2_life = 3;
 static GLint paddle_boundary = 350, paddle_height = 80;
 static GLint player1_paddile_y = 0, player2_paddile_y = 0;
 static GLfloat ball_velocity = 1.0, paddile_velocity = 8.0, ball_radius = 20;
+static GLint ball_pos_x = 0, ball_pos_y = 0;
 
 void init(void) {
     // initalise display with black colors
@@ -212,18 +213,16 @@ void drawPaddle(int x, int y) {
     glPopMatrix();
 }
 
-void drawBall(int x. int y) {
+void drawBall(int x, int y) {
     glPushMatrix();
 
     glTranslatef(x, y, 0);
-
-
     glColor3f(1.0, 1.0, 1.0);
     glutSolidSphere (ball_radius, 20, 16);
 
-
     glPopMatrix();
 }
+
 
 void display(void) {
     glClear(GL_COLOR_BUFFER_BIT);
@@ -232,6 +231,8 @@ void display(void) {
 
     drawPaddle(-550, player1_paddile_y);
     drawPaddle(550, player2_paddile_y);
+
+    drawBall(ball_pos_x, ball_pos_y);
 
     glutSwapBuffers();
     glFlush();
