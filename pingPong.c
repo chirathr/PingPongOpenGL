@@ -12,10 +12,11 @@ static GLint windowSizeX = 800, windowSizeY = 1200;
 static GLint orthoSizeX = 600, orthoSizeY = 400;
 
 // game variables
+static char score_1[20], score_2[20];
 static GLint player1_score = 0, player2_score = 0;
 static GLint player1_life = 3, player2_life = 3;
-static GLint paddle_boundary = 350, paddle_height = 80, paddile_velocity = 8.0;
-static GLint player1_paddile_y = 0, player2_paddile_y = 0, paddle_x = 550;
+static GLint paddle_boundary = 350, paddle_height = 100, paddile_velocity = 8.0;
+static GLint player1_paddile_y = 0, player2_paddile_y = 0, paddle_x = 595;
 static GLfloat ball_velocity_x = 0, ball_velocity_y = 0, ball_radius = 20;
 static GLint ball_pos_x = 0, ball_pos_y = 0;
 
@@ -27,7 +28,7 @@ void init(void) {
     srand(time(NULL));   // should only be called once
 }
 
-void drawStrokeText(char*string,int x,int y,int z)
+void drawStrokeText(char*string, int x, int y, int z)
 {
     char *c;
     glPushMatrix();
@@ -243,7 +244,6 @@ void drawBall(int x, int y) {
 
 
 void display(void) {
-    char score_1[20], score_2[20];
     glClear(GL_COLOR_BUFFER_BIT);
 
     drawCenterLines();
@@ -253,12 +253,12 @@ void display(void) {
 
     drawBall(ball_pos_x, ball_pos_y);
 
-    snprintf (score_1, sizeof(score_1), "%d", player1_score); 
-    drawStrokeText(score_1,200,200,0); 
+    snprintf (score_1, sizeof(score_1), "%d", player1_score);
+    drawStrokeText(score_1, -300, 200, 0);
 
     snprintf (score_2, sizeof(score_2), "%d", player2_score);
-    drawStrokeText(score_2,-300,200,0);
- 
+    drawStrokeText(score_2, 200, 200, 0);
+
     glutSwapBuffers();
     glFlush();
 }
@@ -274,12 +274,12 @@ void startGame(void) {
         ball_velocity_y = -ball_velocity_y;
 
     // ball hits the left paddle
-    if (ball_pos_x - ball_radius < -paddle_x && ball_pos_x - ball_radius < -paddle_x - 2)
+    if (ball_pos_x - ball_radius - 5 < -paddle_x && ball_pos_x - ball_radius < -paddle_x)
         if (ball_pos_y < player1_paddile_y + paddle_height && ball_pos_y > player1_paddile_y - paddle_height)
             ball_velocity_x = -ball_velocity_x;
 
     // ball hits the right paddle
-    if (ball_pos_x + ball_radius > paddle_x && ball_pos_x + ball_radius < paddle_x + 2)
+    if (ball_pos_x + ball_radius + 5 > paddle_x && ball_pos_x + ball_radius < paddle_x)
         if (ball_pos_y < player2_paddile_y + paddle_height && ball_pos_y > player2_paddile_y - paddle_height)
             ball_velocity_x = -ball_velocity_x;
 

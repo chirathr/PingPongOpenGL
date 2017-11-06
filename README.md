@@ -15,3 +15,9 @@ $ gcc pingPong.c  -lm -lglut -lGL -lGLU
 #### Player 2
 - Up : o
 - Down : l
+
+### Start game
+- left mouse button
+
+### Stop game
+- middle mouse button
