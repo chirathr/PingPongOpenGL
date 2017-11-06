@@ -5,7 +5,6 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
-
 /* A simple ping pong game */
 
 // global variables
@@ -27,6 +26,20 @@ void init(void) {
 
     srand(time(NULL));   // should only be called once
 }
+
+void drawStrokeText(char*string,int x,int y,int z)
+{
+    char *c;
+    glPushMatrix();
+    glTranslatef(x, y+8,z);
+    // glScalef(0.09f,-0.08f,z);
+    for (c=string; *c != '\0'; c++)
+    {
+        glutStrokeCharacter(GLUT_STROKE_ROMAN , *c);
+    }
+    glPopMatrix();
+}
+
 
 void drawCenterLines() {
     // center lines start
@@ -230,6 +243,7 @@ void drawBall(int x, int y) {
 
 
 void display(void) {
+    char score_1[20], score_2[20];
     glClear(GL_COLOR_BUFFER_BIT);
 
     drawCenterLines();
@@ -239,6 +253,12 @@ void display(void) {
 
     drawBall(ball_pos_x, ball_pos_y);
 
+    snprintf (score_1, sizeof(score_1), "%d", player1_score); 
+    drawStrokeText(score_1,200,200,0); 
+
+    snprintf (score_2, sizeof(score_2), "%d", player2_score);
+    drawStrokeText(score_2,-300,200,0);
+ 
     glutSwapBuffers();
     glFlush();
 }
