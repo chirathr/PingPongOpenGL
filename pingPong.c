@@ -17,8 +17,8 @@ static GLint player1_score = 0, player2_score = 0;
 static GLint player1_life = 3, player2_life = 3;
 static GLint paddle_boundary = 350, paddle_height = 100, paddile_velocity = 8.0;
 static GLint player1_paddile_y = 0, player2_paddile_y = 0, paddle_x = 595;
-static GLfloat ball_velocity_x = 0, ball_velocity_y = 0, ball_radius = 20;
-static GLint ball_pos_x = 0, ball_pos_y = 0;
+static GLfloat ball_velocity_x = 0, ball_velocity_y = 0, speed_increment = 0.5;
+static GLint ball_pos_x = 0, ball_pos_y = 0, ball_radius = 20;
 
 void init(void) {
     // initalise display with black colors
@@ -275,8 +275,12 @@ void startGame(void) {
 
     // ball hits the left paddle
     if (ball_pos_x - ball_radius - 5 < -paddle_x && ball_pos_x - ball_radius < -paddle_x)
-        if (ball_pos_y < player1_paddile_y + paddle_height && ball_pos_y > player1_paddile_y - paddle_height)
+        if (ball_pos_y < player1_paddile_y + paddle_height && ball_pos_y > player1_paddile_y - paddle_height) {
             ball_velocity_x = -ball_velocity_x;
+            ball_velocity_x += speed_increment;
+            paddile_velocity += speed_increment;
+        }
+
 
     // ball hits the right paddle
     if (ball_pos_x + ball_radius + 5 > paddle_x && ball_pos_x + ball_radius < paddle_x)
@@ -315,6 +319,7 @@ void mouse(int button, int state, int x, int y) {
             if (state == GLUT_DOWN)
             ball_velocity_x = (rand() % 5) -  (rand() % 3);
             ball_velocity_y = (rand() % 5) -  (rand() % 3);
+            paddile_velocity = (ball_velocity_x > ball_velocity_y) ? ball_velocity_x : ball_velocity_y;
             glutIdleFunc(startGame);
             break;
         case GLUT_MIDDLE_BUTTON:
