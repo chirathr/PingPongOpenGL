@@ -1,6 +1,8 @@
 #include <iostream>
 using namespace std;
 
+/* Program to generate the code for the center lines */
+
 int main() {
     for (int i = -410; i < 400 + 10; i+= 40) {
         cout << "glBegin(GL_QUADS);" << endl;
