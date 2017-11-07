@@ -28,6 +28,7 @@ void init(void) {
     srand(time(NULL));   // should only be called once
 }
 
+// draw text on screen
 void drawStrokeText(char*string, int x, int y, int z)
 {
     char *c;
@@ -351,25 +352,33 @@ void mouse(int button, int state, int x, int y) {
 
 void keyboard (unsigned char key, int x, int y) {
     switch (key) {
+        // move player 1 paddile up
         case 'q':
             if (player1_paddile_y < paddle_boundary)
                 player1_paddile_y += paddile_velocity;
             glutPostRedisplay();
             break;
+        // move player 1 paddile down
         case 'a':
             if (player1_paddile_y > -paddle_boundary)
                 player1_paddile_y -= paddile_velocity;
             glutPostRedisplay();
             break;
+        // move player 2 paddile up
         case 'o':
             if (player2_paddile_y < paddle_boundary)
                 player2_paddile_y += paddile_velocity;
             glutPostRedisplay();
             break;
+        // move player 2 paddile down
         case 'l':
             if (player2_paddile_y > -paddle_boundary)
                 player2_paddile_y -= paddile_velocity;
             glutPostRedisplay();
+            break;
+        // exit on esc
+        case 27:
+            exit(0);
             break;
         default:
             break;
