@@ -338,7 +338,7 @@ void mouse(int button, int state, int x, int y) {
             // keep on calling the callback to move the ball and check boundary conditions
             glutIdleFunc(startGame);
             break;
-        // middle button to reset the ball and score
+        // middle button to reset the ball, paddle and score
         case GLUT_MIDDLE_BUTTON:
             // reset ball, paddle and player scores
             ball_pos_x = ball_pos_y = 0;
@@ -400,8 +400,12 @@ int main(int argc, char** argv) {
     glutInitWindowPosition (10, 10);
     glutCreateWindow (argv[0]);
     init ();
+
+    // call back functions for rendering, reshape
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
+
+    // callback on mouse click and keyboard input
     glutMouseFunc(mouse);
     glutKeyboardFunc(keyboard);
     glutMainLoop();
