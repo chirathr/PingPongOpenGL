@@ -5,7 +5,11 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
-/* A simple ping pong game */
+/* A simple ping pong game using opengl library and glut
+   The game starts on left mouse click, and stops on middle mouse click
+   Player 1 can control the game using the keys q and a
+   Player 2 can control the game using the keys o and l
+*/
 
 // global variables
 static GLint windowSizeX = 800, windowSizeY = 1200;
@@ -42,7 +46,7 @@ void drawStrokeText(char*string, int x, int y, int z)
     glPopMatrix();
 }
 
-
+// draw the center lines spaces 20 pixels apart and with a width of 4 px
 void drawCenterLines() {
     // center lines start
     glBegin(GL_QUADS);
