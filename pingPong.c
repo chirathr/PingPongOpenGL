@@ -242,23 +242,30 @@ void drawBall(int x, int y) {
     glPopMatrix();
 }
 
-
+// main display functions
 void display(void) {
     glClear(GL_COLOR_BUFFER_BIT);
 
+    // create center lines
     drawCenterLines();
 
+    // draw left paddle at (-paddle_x, player1_paddile_y)
     drawPaddle(-paddle_x, player1_paddile_y);
+    // draw right paddle at (paddle_x, player2_paddile_y)
     drawPaddle(paddle_x, player2_paddile_y);
 
+    // draw the ball (ball_pos_x, ball_pos_y) - varies in each frame
     drawBall(ball_pos_x, ball_pos_y);
 
+    // draw the score on the left for player 1
     snprintf (score_1, sizeof(score_1), "%d", player1_score);
     drawStrokeText(score_1, -300, 200, 0);
 
+    // draw the score on the left for player 1
     snprintf (score_2, sizeof(score_2), "%d", player2_score);
     drawStrokeText(score_2, 200, 200, 0);
 
+    // swap the current frame with the drawn frame
     glutSwapBuffers();
     glFlush();
 }
@@ -304,6 +311,7 @@ void startGame(void) {
     glutPostRedisplay();
 }
 
+// reshape the display
 void reshape(int w, int h) {
     glViewport (0, 0, (GLsizei) w, (GLsizei) h);
     glMatrixMode(GL_PROJECTION);
@@ -313,20 +321,27 @@ void reshape(int w, int h) {
     glLoadIdentity();
 }
 
+// on mouse button click
 void mouse(int button, int state, int x, int y) {
     switch (button) {
+        // left button - initialize random velocity between (ran(5) - rand(3))
         case GLUT_LEFT_BUTTON:
             if (state == GLUT_DOWN)
             ball_velocity_x = (rand() % 5) -  (rand() % 3);
             ball_velocity_y = (rand() % 5) -  (rand() % 3);
-            paddile_velocity = (ball_velocity_x > ball_velocity_y) ? ball_velocity_x : ball_velocity_y;
+
+            // keep on calling the callback to move the ball and check boundary conditions
             glutIdleFunc(startGame);
             break;
+        // middle button to reset the ball and score
         case GLUT_MIDDLE_BUTTON:
-            ball_pos_x = 0;
-            ball_pos_y = 0;
+            // reset ball, paddle and player scores
+            ball_pos_x = ball_pos_y = 0;
+            player1_paddile_y = player2_paddile_y = 0;
+            player1_score = player2_score = 0;
             if (state == GLUT_DOWN)
-            glutIdleFunc(NULL);
+                // remove the call back so that game stops
+                glutIdleFunc(NULL);
             break;
         default:
         break;
